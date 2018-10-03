@@ -51,7 +51,7 @@ except KeyboardInterrupt:
     msg = can.Message(arbitration_id=sync_gen_id, data=[0x23, 0x05, 0x10, 0x00, 0x80, 0x00, 0x00, 0x00], extended_id=False)
     bus.send(msg)
     os.system('sudo /sbin/ip link set can0 down')
-    f = open('./data/tiltmeter-{0:%Y%m%d-%H%M%S}.pickle'.format(now), 'wb')
+    f = open('/home/necst/can/data/tiltmeter-{0:%Y%m%d-%H%M%S}.pickle'.format(now), 'wb')
     pickle.dump(data_save, f)
     f.close()
     print('\n\rKeyboard interrtupt')
