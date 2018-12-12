@@ -28,8 +28,10 @@ except OSError:
 print('Press CTL-C to exit')
 
 # sync time
+'''
 msg = can.Message(arbitration_id=sync_gen_id, data=[0x23, 0x06, 0x10, 0x00, 0xe8, 0x03, 0x00, 0x00], extended_id=False)
 bus.send(msg)
+'''
 msg = can.Message(arbitration_id=sync_gen_id, data=[0x23, 0x05, 0x10, 0x00, 0x80, 0x00, 0x00, 0x40], extended_id=False)
 bus.send(msg)
 message0 = bus.recv()

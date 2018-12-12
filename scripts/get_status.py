@@ -31,7 +31,8 @@ _synctime = binascii.hexlify(bus.recv().data)
 synctime = int(_synctime[14:16] + _synctime[12:14] + _synctime[10:12] + _synctime[8:10], 16)
 d['synctime (msec.)'] = float(synctime / 1000)
 
-for i in range(1, 4 + 1):
+# for i in range(1, 4 + 1):
+for i in [1, 3, 4]:
       read_filefmt = can.Message(arbitration_id=base_nid+i, data=data_read_filefmt, extended_id=False)
       bus.send(read_filefmt)
       filefmt = int(binascii.hexlify(bus.recv().data)[8:10])
