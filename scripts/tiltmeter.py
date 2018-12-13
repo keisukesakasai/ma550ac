@@ -1,0 +1,8 @@
+import os
+import can
+import time
+import numpy
+import datetime
+import pickle
+
+sync_off = [0x23, 0x05, 0x10, 0x00, 0xe8, 0x03, 0x00, 0x00]
