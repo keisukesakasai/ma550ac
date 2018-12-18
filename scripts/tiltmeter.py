@@ -27,13 +27,13 @@ class tilt_controller(object):
         pre_mode_data = [0x80] + [0x00] * 7
         sync_producer_data = [0x23, 0x05, 0x10, 0x00, 0x80, 0x00, 0x00, 0x40]
 
-        self.nid_list = str2list(rospy.get_param('~nid_list'))
+        self.nid_list = list(map(int, str2list(rospy.get_param('~nid_list'))))
         self.datafmt = rospy.get_param('~datafmt')
         self.synctime = rospy.get_param('~synctime')
         self.sync_producer_nid = rospy.get_param('~sync_producer_nid')
 
         # CAN interface up.
-        pirnt('Bring up CAN0 interface...')
+        print('Bring up CAN0 interface...')
         os.system("sudo /sbin/ip link set can0 up type can bitrate 1000000")
         time.sleep(1e-1)
         try:
@@ -49,9 +49,10 @@ class tilt_controller(object):
             {arbitration_id: rospy.Publisher(
             name = topic,
             data_class = std_msgs.msg.ByteMultiArray,
-            latch = True
+                latch = True,
             queue_size = 1
-            )} for arbitration_id, topic in zip(arbitration_id, topic)]
+            )} for arbitration_id, topic in zip(arbitration_id_list, topic_list)]
+        print(pub_list)
 
     def set_synctime(self):
         synctime = self.synctime * 1000 # usec.
@@ -127,4 +128,4 @@ if __name__ == '__main__':
     # self.set_datafmt()
     ctrl = tilt_controller()
     # ctrl.start_thread_ROS()
-    # rospy.spin()
+    rospy.spin()
