@@ -8,6 +8,7 @@ import numpy
 import datetime
 import pickle
 import threading
+import signal
 
 import rospy
 import std_msgs
@@ -27,7 +28,7 @@ class tilt_controller(object):
         self.restart_data = [0x01] + [0x00] * 7
         self.pre_mode_data = [0x80] + [0x00] * 7
         self.sync_producer_start_data = [0x23, 0x05, 0x10, 0x00, 0x80, 0x00, 0x00, 0x40]
-        self.sync_producer_start_data = [0x23, 0x05, 0x10, 0x00, 0x80, 0x00, 0x00, 0x00]
+        self.sync_producer_stop_data = [0x23, 0x05, 0x10, 0x00, 0x80, 0x00, 0x00, 0x00]
 
         self.nid_list = list(map(int, str2list(rospy.get_param('~nid_list'))))
         self.datafmt = rospy.get_param('~datafmt')
@@ -55,12 +56,12 @@ class tilt_controller(object):
             exit()
 
         # define event handler.
-        signal.signal(signal.SIGINT, handler)
+        signal.signal(signal.SIGINT, self.handler)
 
     def handler(self, signal, frame):
         msg = can.Message(
             arbitration_id=self.sync_producer_nid,
-            data=sync_producer_stop_data,
+            data=self.sync_producer_stop_data,
             extended_id=False
             )
         self.bus.send(msg)
