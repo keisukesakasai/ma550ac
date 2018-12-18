@@ -120,7 +120,19 @@ class tilt_controller(object):
         msg = can.Message(arbitration_id=sync_producer_nid, data=sync_producer_data, extended_id=False)
         self.bus.send(msg)
 
-        #
+        # publish
+        try:
+            while not rospy.is_shutdown():
+                d = bus.recv()
+                pub_list[d.arbitration_id].publish(d.data)
+                time.sleep(1e-3)
+        except KeyboardInterrupt:
+            print('try-except test')
+
+    def start_thread_ROS()
+        th = threading.Thread(target=self.start_syncmode)
+        th.setDaemon(True)
+        th.start()
 
 if __name__ == '__main__':
     rospy.init_node('tiltmeter')
@@ -128,4 +140,4 @@ if __name__ == '__main__':
     # self.set_datafmt()
     ctrl = tilt_controller()
     # ctrl.start_thread_ROS()
-    rospy.spin()
+    self.start_thread_ROS()
