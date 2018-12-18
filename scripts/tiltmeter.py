@@ -113,7 +113,7 @@ class tilt_controller(object):
         self.bus.send(msg)
         time.sleep(1)
 
-        print('[INFO] SET SYNC TIME {} msec.'.format(synctime / 1000))
+        print('[INFO] Set sync time {} msec.'.format(synctime / 1000))
         return
 
     def set_datafmt(self):
@@ -151,7 +151,7 @@ class tilt_controller(object):
         self.bus.send(msg)
         time.sleep(1) # for the time being.
 
-        print('[INFO] SET DATA FORMAT : {}'.format(self.datafmt))
+        print('[INFO] Set data format : {}'.format(self.datafmt))
         return
 
     def start_syncmode(self):
@@ -184,5 +184,5 @@ if __name__ == '__main__':
     ctrl.set_synctime()
     ctrl.set_datafmt()
     time.sleep(1)
-    print('[INFO] START TILTMETER DATA PUBLISH...')
+    print('[INFO] Start tiltmeter data pubilsh...')
     ctrl.start_syncmode()
