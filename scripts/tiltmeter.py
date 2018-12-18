@@ -44,15 +44,14 @@ class tilt_controller(object):
             exit()
 
         # define ROS parameter.
-        arbitration_id_list = [cob_tpdo1 + nid for nid in self.nid_list] + [cob_tpdo4 + nid for nid in self.nid_list]
+        self.arbitration_id_list = [cob_tpdo1 + nid for nid in self.nid_list] + [cob_tpdo4 + nid for nid in self.nid_list]
         topic_list = ['/tiltmeter_nid{}_angle'.format(nid) for nid in self.nid_list] + ['/tiltmeter_nid{}_temp'.format(nid) for nid in self.nid_list]
-        self.pub_list = [
-            {arbitration_id: rospy.Publisher(
+        self.pub_list = [rospy.Publisher(
             name = topic,
             data_class = std_msgs.msg.ByteMultiArray,
-                latch = True,
+            latch = True,
             queue_size = 1
-            )} for arbitration_id, topic in zip(arbitration_id_list, topic_list)]
+            ) for topic in topic_list]
 
     def set_synctime(self):
         synctime = self.synctime * 1000 # usec.
@@ -123,8 +122,9 @@ class tilt_controller(object):
         # publish
         try:
             while not rospy.is_shutdown():
-                d = bus.recv()
-                self.pub_list[d.arbitration_id].publish(d.data)
+                d = self.bus.recv()
+                idx = self.arbitration_id_list.index(d.data)
+                self.pub_list[idx]
                 time.sleep(1e-3)
         except KeyboardInterrupt:
             print('try-except test')
