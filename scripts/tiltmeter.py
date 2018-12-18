@@ -7,6 +7,7 @@ import time
 import numpy
 import datetime
 import pickle
+import threading
 
 import rospy
 import std_msgs
@@ -117,7 +118,7 @@ class tilt_controller(object):
 
     def start_syncmode(self):
         # start syncmode
-        msg = can.Message(arbitration_id=sync_producer_nid, data=sync_producer_data, extended_id=False)
+        msg = can.Message(arbitration_id=self.sync_producer_nid, data=sync_producer_data, extended_id=False)
         self.bus.send(msg)
 
         # publish
@@ -129,10 +130,6 @@ class tilt_controller(object):
         except KeyboardInterrupt:
             print('try-except test')
 
-    def start_thread_ROS()
-        th = threading.Thread(target=self.start_syncmode)
-        th.setDaemon(True)
-        th.start()
 
 if __name__ == '__main__':
     rospy.init_node('tiltmeter')
@@ -140,4 +137,4 @@ if __name__ == '__main__':
     # self.set_datafmt()
     ctrl = tilt_controller()
     # ctrl.start_thread_ROS()
-    self.start_thread_ROS()
+    ctrl.start_syncmode()
