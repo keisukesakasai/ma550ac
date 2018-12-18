@@ -33,7 +33,7 @@ class tilt_controller(object):
         self.nid_list = list(map(int, str2list(rospy.get_param('~nid_list'))))
         self.datafmt = rospy.get_param('~datafmt')
         self.synctime = rospy.get_param('~synctime')
-        self.sync_producer_nid = rospy.get_param('~sync_producer_nid')
+        self.sync_producer_nid = self.base_nid + rospy.get_param('~sync_producer_nid')
 
         # define ROS parameter.
         self.arbitration_id_list = [cob_tpdo1 + nid for nid in self.nid_list] + [cob_tpdo4 + nid for nid in self.nid_list]
@@ -184,5 +184,5 @@ if __name__ == '__main__':
     ctrl.set_synctime()
     ctrl.set_datafmt()
     time.sleep(1)
-    ctrl.start_syncmode()
     print('[INFO] START TILTMETER DATA PUBLISH...')
+    ctrl.start_syncmode()
