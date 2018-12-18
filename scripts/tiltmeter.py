@@ -37,7 +37,7 @@ class tilt_controller(object):
 
         # define ROS parameter.
         self.arbitration_id_list = [cob_tpdo1 + nid for nid in self.nid_list] + [cob_tpdo4 + nid for nid in self.nid_list]
-        topic_list = ['/tiltmeter_nid{}_angle'.format(nid) for nid in self.nid_list] + ['/tiltmeter_nid{}_temp'.format(nid) for nid in self.nid_list]
+        topic_list = ['/tiltmeter_nid{1}_{2}'.format(nid, self.datafmt) for nid in self.nid_list] + ['/tiltmeter_nid{}_temp'.format(nid) for nid in self.nid_list]
         self.pub_list = [rospy.Publisher(
             name = topic,
             data_class = std_msgs.msg.std_msgs.msg.Int64MultiArray,
@@ -180,8 +180,8 @@ class tilt_controller(object):
 
 if __name__ == '__main__':
     rospy.init_node('tiltmeter')
-    # self.set_synctime()
-    # self.set_datafmt()
+    self.set_synctime()
+    self.set_datafmt()
     ctrl = tilt_controller()
     ctrl.start_syncmode()
     print('[INFO] START TILTMETER DATA PUBLISH...')
