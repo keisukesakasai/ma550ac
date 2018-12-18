@@ -48,7 +48,7 @@ class tilt_controller(object):
         topic_list = ['/tiltmeter_nid{}_angle'.format(nid) for nid in self.nid_list] + ['/tiltmeter_nid{}_temp'.format(nid) for nid in self.nid_list]
         self.pub_list = [rospy.Publisher(
             name = topic,
-            data_class = std_msgs.msg.ByteMultiArray,
+            data_class = std_msgs.msg.std_msgs.msg.Int64MultiArray,
             latch = True,
             queue_size = 1
             ) for topic in topic_list]
@@ -125,8 +125,8 @@ class tilt_controller(object):
                 d = self.bus.recv()
                 if d.arbitration_id == 0x080: pass
                 else:
-                    msg = std_msgs.msg.ByteMultiArray()
-                    msg.data = list(d.data)
+                    msg = std_msgs.msg.Int64MultiArray()
+                    msg.data = [_d for _d in d.data]
                     pub_idx = self.arbitration_id_list.index(d.arbitration_id)
                     self.pub_list[pub_idx].publish(msg)
                     time.sleep(1e-3)
