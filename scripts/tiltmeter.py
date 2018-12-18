@@ -133,7 +133,7 @@ class tilt_controller(object):
         time.sleep(1) # for the time being.
 
         # set data format.
-        for _nid in range(1, len(self.nid_list)+1):
+        for _nid in self.nid_list:
             msg = can.Message(
                 arbitration_id=self.base_nid+_nid,
                 data=fmt_data,
