@@ -26,12 +26,23 @@ class tilt_controller(object):
         cob_tpdo4 = 0b10010000000
         self.restart_data = [0x01] + [0x00] * 7
         self.pre_mode_data = [0x80] + [0x00] * 7
-        self.sync_producer_data = [0x23, 0x05, 0x10, 0x00, 0x80, 0x00, 0x00, 0x40]
+        self.sync_producer_start_data = [0x23, 0x05, 0x10, 0x00, 0x80, 0x00, 0x00, 0x40]
+        self.sync_producer_start_data = [0x23, 0x05, 0x10, 0x00, 0x80, 0x00, 0x00, 0x00]
 
         self.nid_list = list(map(int, str2list(rospy.get_param('~nid_list'))))
         self.datafmt = rospy.get_param('~datafmt')
         self.synctime = rospy.get_param('~synctime')
         self.sync_producer_nid = rospy.get_param('~sync_producer_nid')
+
+        # define ROS parameter.
+        self.arbitration_id_list = [cob_tpdo1 + nid for nid in self.nid_list] + [cob_tpdo4 + nid for nid in self.nid_list]
+        topic_list = ['/tiltmeter_nid{}_angle'.format(nid) for nid in self.nid_list] + ['/tiltmeter_nid{}_temp'.format(nid) for nid in self.nid_list]
+        self.pub_list = [rospy.Publisher(
+            name = topic,
+            data_class = std_msgs.msg.std_msgs.msg.Int64MultiArray,
+            latch = True,
+            queue_size = 1
+            ) for topic in topic_list]
 
         # CAN interface up.
         print('Bring up CAN0 interface...')
@@ -43,15 +54,19 @@ class tilt_controller(object):
             print('Cannot find PiCAN board.')
             exit()
 
-        # define ROS parameter.
-        self.arbitration_id_list = [cob_tpdo1 + nid for nid in self.nid_list] + [cob_tpdo4 + nid for nid in self.nid_list]
-        topic_list = ['/tiltmeter_nid{}_angle'.format(nid) for nid in self.nid_list] + ['/tiltmeter_nid{}_temp'.format(nid) for nid in self.nid_list]
-        self.pub_list = [rospy.Publisher(
-            name = topic,
-            data_class = std_msgs.msg.std_msgs.msg.Int64MultiArray,
-            latch = True,
-            queue_size = 1
-            ) for topic in topic_list]
+        # define event handler.
+        signal.signal(signal.SIGINT, handler)
+
+    def handler(self, signal, frame):
+        msg = can.Message(
+            arbitration_id=self.sync_producer_nid,
+            data=sync_producer_stop_data,
+            extended_id=False
+            )
+        self.bus.send(msg)
+        os.system('sudo /sbin/ip link set can0 down')
+        print('\n\rKeyboard interrtupt')
+
 
     def set_synctime(self):
         synctime = self.synctime * 1000 # usec.
@@ -71,17 +86,29 @@ class tilt_controller(object):
         synctime_data.extend([int(_, 16) for _ in time2data(synctime)])
 
         # pre-operational mode.
-        msg = can.Message(arbitration_id=self.all_nid, data=self.pre_mode_data, extended_id=False)
+        msg = can.Message(
+            arbitration_id=self.all_nid,
+            data=self.pre_mode_data,
+            extended_id=False
+            )
         bus.send(msg)
         time.sleep(1) # for the time being.
 
         # set sync time.
-        msg = can.Message(arbitration_id=self.sync_producer_nid, data=self.synctime_data, extended_id=False)
+        msg = can.Message(
+            arbitration_id=self.sync_producer_nid,
+            data=self.synctime_data,
+            extended_id=False
+            )
         bus.send(msg)
         time.sleep(1) # for the time being.
 
         # restart.
-        msg = can.Message(arbitration_id=self.all_nid, data=self.restart_data, extended_id=False)
+        msg = can.Message(
+            arbitration_id=self.all_nid,
+            data=self.restart_data,
+            extended_id=False
+            )
         self.bus.send(msg)
         time.sleep(1)
 
@@ -96,18 +123,30 @@ class tilt_controller(object):
         else: pass
 
         # pre-perational mode.
-        msg = can.Message(arbitration_id=self.all_nid, data=self.pre_mode_data, extended_id=False)
+        msg = can.Message(
+            arbitration_id=self.all_nid,
+            data=self.pre_mode_data,
+            extended_id=False
+            )
         bus.send(msg)
         time.sleep(1) # for the time being.
 
         # set data format.
         for _nid in range(1, len(self.nid_list)+1):
-            msg = can.Message(arbitration_id=self.base_nid+_nid, data=self.fmt_data, extended_id=False)
+            msg = can.Message(
+                arbitration_id=self.base_nid+_nid,
+                data=self.fmt_data,
+                extended_id=False
+                )
             self.bus.send(msg)
             time.sleep(1) # for the time being.
 
         # restart.
-        msg = can.Message(arbitration_id=self.all_node, data=self.data_restart, extended_id=False)
+        msg = can.Message(
+            arbitration_id=self.all_node,
+            data=self.data_restart,
+            extended_id=False
+            )
         self.bus.send(msg)
         time.sleep(1) # for the time being.
 
@@ -116,7 +155,11 @@ class tilt_controller(object):
 
     def start_syncmode(self):
         # start syncmode
-        msg = can.Message(arbitration_id=self.sync_producer_nid, data=self.sync_producer_data, extended_id=False)
+        msg = can.Message(
+            arbitration_id=self.sync_producer_nid,
+            data=self.sync_producer_start_data,
+            extended_id=False
+            )
         self.bus.send(msg)
 
         # publish
@@ -139,5 +182,5 @@ if __name__ == '__main__':
     # self.set_synctime()
     # self.set_datafmt()
     ctrl = tilt_controller()
-    # ctrl.start_thread_ROS()
     ctrl.start_syncmode()
+    print('[INFO] START TILTMETER DATA PUBLISH...')
