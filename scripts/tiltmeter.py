@@ -37,7 +37,7 @@ class tilt_controller(object):
 
         # define ROS parameter.
         self.arbitration_id_list = [cob_tpdo1 + nid for nid in self.nid_list] + [cob_tpdo4 + nid for nid in self.nid_list]
-        topic_list = ['/tiltmeter_nid{1}_{2}'.format(nid, self.datafmt) for nid in self.nid_list] + ['/tiltmeter_nid{}_temp'.format(nid) for nid in self.nid_list]
+        topic_list = ['/tiltmeter_nid{0}_{1}'.format(nid, self.datafmt) for nid in self.nid_list] + ['/tiltmeter_nid{}_temp'.format(nid) for nid in self.nid_list]
         self.pub_list = [rospy.Publisher(
             name = topic,
             data_class = std_msgs.msg.std_msgs.msg.Int64MultiArray,
@@ -92,16 +92,16 @@ class tilt_controller(object):
             data=self.pre_mode_data,
             extended_id=False
             )
-        bus.send(msg)
+        self.bus.send(msg)
         time.sleep(1) # for the time being.
 
         # set sync time.
         msg = can.Message(
             arbitration_id=self.sync_producer_nid,
-            data=self.synctime_data,
+            data=synctime_data,
             extended_id=False
             )
-        bus.send(msg)
+        self.bus.send(msg)
         time.sleep(1) # for the time being.
 
         # restart.
@@ -113,7 +113,7 @@ class tilt_controller(object):
         self.bus.send(msg)
         time.sleep(1)
 
-        print('[INFO] SET SYNC TIME {} msec.'.format(sync_time / 1000))
+        print('[INFO] SET SYNC TIME {} msec.'.format(synctime / 1000))
         return
 
     def set_datafmt(self):
@@ -129,14 +129,14 @@ class tilt_controller(object):
             data=self.pre_mode_data,
             extended_id=False
             )
-        bus.send(msg)
+        self.bus.send(msg)
         time.sleep(1) # for the time being.
 
         # set data format.
         for _nid in range(1, len(self.nid_list)+1):
             msg = can.Message(
                 arbitration_id=self.base_nid+_nid,
-                data=self.fmt_data,
+                data=fmt_data,
                 extended_id=False
                 )
             self.bus.send(msg)
@@ -144,8 +144,8 @@ class tilt_controller(object):
 
         # restart.
         msg = can.Message(
-            arbitration_id=self.all_node,
-            data=self.data_restart,
+            arbitration_id=self.all_nid,
+            data=self.restart_data,
             extended_id=False
             )
         self.bus.send(msg)
@@ -167,7 +167,7 @@ class tilt_controller(object):
         try:
             while not rospy.is_shutdown():
                 d = self.bus.recv()
-                if d.arbitration_id == 0x080: pass
+                if d.arbitration_id == 0x080 or 0x581: pass
                 else:
                     msg = std_msgs.msg.Int64MultiArray()
                     msg.data = [_d for _d in d.data]
@@ -180,8 +180,9 @@ class tilt_controller(object):
 
 if __name__ == '__main__':
     rospy.init_node('tiltmeter')
-    self.set_synctime()
-    self.set_datafmt()
     ctrl = tilt_controller()
+    ctrl.set_synctime()
+    ctrl.set_datafmt()
+    time.sleep(1)
     ctrl.start_syncmode()
     print('[INFO] START TILTMETER DATA PUBLISH...')
