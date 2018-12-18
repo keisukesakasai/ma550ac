@@ -13,8 +13,10 @@ import signal
 import rospy
 import std_msgs
 
+
 def str2list(param):
     return param.strip('[').strip(']').split(',')
+
 
 class tilt_controller(object):
 
@@ -67,7 +69,6 @@ class tilt_controller(object):
         self.bus.send(msg)
         os.system('sudo /sbin/ip link set can0 down')
         print('\n\rKeyboard interrtupt')
-
 
     def set_synctime(self):
         synctime = self.synctime * 1000 # usec.
