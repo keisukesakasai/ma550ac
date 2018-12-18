@@ -123,9 +123,13 @@ class tilt_controller(object):
         try:
             while not rospy.is_shutdown():
                 d = self.bus.recv()
-                idx = self.arbitration_id_list.index(d.data)
-                self.pub_list[idx]
-                time.sleep(1e-3)
+                if d.arbitration_id == 0x080: pass
+                else:
+                    msg = std_msgs.msg.ByteMultiArray()
+                    msg.data = d.data
+                    pub_idx = self.arbitration_id_list.index(d.arbitration_id)
+                    self.pub_list[pub_idx].publish(msg)
+                    time.sleep(1e-3)
         except KeyboardInterrupt:
             print('try-except test')
 
