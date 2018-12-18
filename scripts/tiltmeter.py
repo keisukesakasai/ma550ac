@@ -19,14 +19,14 @@ class tilt_controller(object):
 
     def __init__(self):
         # set params.
-        all_nid = 0x000
-        base_nid = 0x600
+        self.all_nid = 0x000
+        self.base_nid = 0x600
         cob_mask = 0b11110000000
         cob_tpdo1 = 0b00110000000
         cob_tpdo4 = 0b10010000000
-        restart_data = [0x01] + [0x00] * 7
-        pre_mode_data = [0x80] + [0x00] * 7
-        sync_producer_data = [0x23, 0x05, 0x10, 0x00, 0x80, 0x00, 0x00, 0x40]
+        self.restart_data = [0x01] + [0x00] * 7
+        self.pre_mode_data = [0x80] + [0x00] * 7
+        self.sync_producer_data = [0x23, 0x05, 0x10, 0x00, 0x80, 0x00, 0x00, 0x40]
 
         self.nid_list = list(map(int, str2list(rospy.get_param('~nid_list'))))
         self.datafmt = rospy.get_param('~datafmt')
@@ -46,14 +46,13 @@ class tilt_controller(object):
         # define ROS parameter.
         arbitration_id_list = [cob_tpdo1 + nid for nid in self.nid_list] + [cob_tpdo4 + nid for nid in self.nid_list]
         topic_list = ['/tiltmeter_nid{}_angle'.format(nid) for nid in self.nid_list] + ['/tiltmeter_nid{}_temp'.format(nid) for nid in self.nid_list]
-        pub_list = [
+        self.pub_list = [
             {arbitration_id: rospy.Publisher(
             name = topic,
             data_class = std_msgs.msg.ByteMultiArray,
                 latch = True,
             queue_size = 1
             )} for arbitration_id, topic in zip(arbitration_id_list, topic_list)]
-        print(pub_list)
 
     def set_synctime(self):
         synctime = self.synctime * 1000 # usec.
@@ -73,17 +72,17 @@ class tilt_controller(object):
         synctime_data.extend([int(_, 16) for _ in time2data(synctime)])
 
         # pre-operational mode.
-        msg = can.Message(arbitration_id=all_nid, data=pre_mode_data, extended_id=False)
+        msg = can.Message(arbitration_id=self.all_nid, data=self.pre_mode_data, extended_id=False)
         bus.send(msg)
         time.sleep(1) # for the time being.
 
         # set sync time.
-        msg = can.Message(arbitration_id=self.sync_producer_nid, data=synctime_data, extended_id=False)
+        msg = can.Message(arbitration_id=self.sync_producer_nid, data=self.synctime_data, extended_id=False)
         bus.send(msg)
         time.sleep(1) # for the time being.
 
         # restart.
-        msg = can.Message(arbitration_id=all_nid, data=restart_data, extended_id=False)
+        msg = can.Message(arbitration_id=self.all_nid, data=self.restart_data, extended_id=False)
         self.bus.send(msg)
         time.sleep(1)
 
@@ -98,18 +97,18 @@ class tilt_controller(object):
         else: pass
 
         # pre-perational mode.
-        msg = can.Message(arbitration_id=all_nid, data=pre_mode_data, extended_id=False)
+        msg = can.Message(arbitration_id=self.all_nid, data=self.pre_mode_data, extended_id=False)
         bus.send(msg)
         time.sleep(1) # for the time being.
 
         # set data format.
         for _nid in range(1, len(self.nid_list)+1):
-            msg = can.Message(arbitration_id=base_nid+_nid, data=fmt_data, extended_id=False)
+            msg = can.Message(arbitration_id=self.base_nid+_nid, data=self.fmt_data, extended_id=False)
             self.bus.send(msg)
             time.sleep(1) # for the time being.
 
         # restart.
-        msg = can.Message(arbitration_id=anode, data=data_restart, extended_id=False)
+        msg = can.Message(arbitration_id=self.all_node, data=self.data_restart, extended_id=False)
         self.bus.send(msg)
         time.sleep(1) # for the time being.
 
@@ -118,14 +117,14 @@ class tilt_controller(object):
 
     def start_syncmode(self):
         # start syncmode
-        msg = can.Message(arbitration_id=self.sync_producer_nid, data=sync_producer_data, extended_id=False)
+        msg = can.Message(arbitration_id=self.sync_producer_nid, data=self.sync_producer_data, extended_id=False)
         self.bus.send(msg)
 
         # publish
         try:
             while not rospy.is_shutdown():
                 d = bus.recv()
-                pub_list[d.arbitration_id].publish(d.data)
+                self.pub_list[d.arbitration_id].publish(d.data)
                 time.sleep(1e-3)
         except KeyboardInterrupt:
             print('try-except test')
