@@ -1,5 +1,5 @@
 <launch>
-  <node pkg="ma550ac" name="ma550ac" type="ma550ac.py" required="true" output="screen">
+  <node pkg="ma550ac_2" name="ma550ac_2" type="ma550ac.py" required="true" output="screen">
     <param name="~nid_list" value="[2]" />
     <param name="~datafmt" value="tilt" />
     <param name="~synctime" value="1000" />
