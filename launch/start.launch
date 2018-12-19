@@ -1,12 +1,18 @@
 <launch>
 
   <group>
+    <!--
     <machine name="rpi-tilt1" address="rpi-tilt1" env-loader="/home/necst/ros/devel/env.sh" user="necst" password="t10Nante"/>
+    -->
+    <machine name="172.20.0.31" address="172.20.0.31" env-loader="/home/necst/ros/devel/env.sh" user="necst" password="t10Nante"/>
     <include file="$(find ma550ac)/launch/ma550ac_1_3_4.launch" />
   </group>
 
   <group>
+    <!--
     <machine name="rpi-tilt2" address="rpi-tilt2" env-loader="/home/necst/ros/devel/env.sh" user="necst" password="t10Nante"/>
+    -->
+    <machine name="172.20.0.33" address="172.20.0.33" env-loader="/home/necst/ros/devel/env.sh" user="necst" password="t10Nante"/>
     <include file="$(find ma550ac)/launch/ma550ac_2.launch" />
   </group>
 
