@@ -5,7 +5,7 @@
     	pkg = "ma550ac">
     <remap from = '/xtilt' to = '/ma550ac_nid1_xtilt_arcsec'/>
     <remap from = '/ytilt' to = '/ma550ac_nid1_ytilt_arcsec' />
-    <remap from = '/tilt' to = '/ma550ac_nid1_tilt' />
+    <remap from = '/tilt' to = '/ma550ac_nid1_tilt_binary' />
     <param name = "config_file"
            value = "$(find ma550ac)/relay_conf/ma550ac_tilt.conf" />
   </node>
@@ -15,7 +15,7 @@
     	pkg = "ma550ac">
     <remap from = '/xtilt' to = '/ma550ac_nid3_xtilt_arcsec'/>
     <remap from = '/ytilt' to = '/ma550ac_nid3_ytilt_arcsec' />
-    <remap from = '/tilt' to = '/ma550ac_nid3_tilt' />
+    <remap from = '/tilt' to = '/ma550ac_nid3_tilt_binary' />
     <param name = "config_file"
            value = "$(find ma550ac)/relay_conf/ma550ac_tilt.conf" />
   </node>
@@ -25,7 +25,7 @@
     	pkg = "ma550ac">
     <remap from = '/xtilt' to = '/ma550ac_nid4_xtilt_arcsec'/>
     <remap from = '/ytilt' to = '/ma550ac_nid4_ytilt_arcsec' />
-    <remap from = '/tilt' to = '/ma550ac_nid4_tilt' />
+    <remap from = '/tilt' to = '/ma550ac_nid4_tilt_binary' />
     <param name = "config_file"
            value = "$(find ma550ac)/relay_conf/ma550ac_tilt.conf" />
   </node>

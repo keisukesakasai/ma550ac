@@ -39,7 +39,7 @@ class ma550ac_controller(object):
 
         # define ROS parameter.
         self.arbitration_id_list = [cob_tpdo1 + nid for nid in self.nid_list] + [cob_tpdo4 + nid for nid in self.nid_list]
-        topic_list = ['/ma550ac_nid{0}_{1}'.format(nid, self.datafmt) for nid in self.nid_list] + ['/ma550ac_nid{}_temp'.format(nid) for nid in self.nid_list]
+        topic_list = ['/ma550ac_nid{0}_{1}_binary'.format(nid, self.datafmt) for nid in self.nid_list] + ['/ma550ac_nid{}_temp_binary'.format(nid) for nid in self.nid_list]
         self.pub_list = [rospy.Publisher(
             name = topic,
             data_class = std_msgs.msg.Int64MultiArray,
