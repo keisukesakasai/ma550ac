@@ -175,7 +175,7 @@ class ma550ac_controller(object):
                 print(self.pub_ilst[pub_idx])
                 time.sleep(1e-3)
             else: pass
-                
+
 
 if __name__ == '__main__':
     rospy.init_node('ma550ac')
