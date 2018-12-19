@@ -7,7 +7,7 @@
 
   <machine name="rpi_ma550ac_1"
            address="rpi_ma550ac_1"
-           env-loader="/home/amigos/ros/devel/env.sh"
+           env-loader="/home/necst/ros/devel/env.sh"
            user="necst"
            password="t10Nante"/>
   <node machine="rpi_ma550ac_1"
@@ -18,7 +18,7 @@
 
   <machine name="rpi_ma550ac_2"
            address="rpi_ma550ac_2"
-           env-loader="/home/amigos/ros/devel/env.sh"
+           env-loader="/home/necst/ros/devel/env.sh"
            user="necst"
            password="t10Nante"/>
   <node machine="rpi_ma550ac_2"
