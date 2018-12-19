@@ -18,7 +18,7 @@ def str2list(param):
     return param.strip('[').strip(']').split(',')
 
 
-class tilt_controller(object):
+class ma550ac_controller(object):
 
     def __init__(self):
         # set params.
@@ -39,7 +39,7 @@ class tilt_controller(object):
 
         # define ROS parameter.
         self.arbitration_id_list = [cob_tpdo1 + nid for nid in self.nid_list] + [cob_tpdo4 + nid for nid in self.nid_list]
-        topic_list = ['/tiltmeter_nid{0}_{1}'.format(nid, self.datafmt) for nid in self.nid_list] + ['/tiltmeter_nid{}_temp'.format(nid) for nid in self.nid_list]
+        topic_list = ['/ma550ac_nid{0}_{1}'.format(nid, self.datafmt) for nid in self.nid_list] + ['/ma550ac_nid{}_temp'.format(nid) for nid in self.nid_list]
         self.pub_list = [rospy.Publisher(
             name = topic,
             data_class = std_msgs.msg.std_msgs.msg.Int64MultiArray,
@@ -180,10 +180,10 @@ class tilt_controller(object):
 
 
 if __name__ == '__main__':
-    rospy.init_node('tiltmeter')
-    ctrl = tilt_controller()
+    rospy.init_node('ma550ac')
+    ctrl = ma550ac_controller()
     ctrl.set_synctime()
     ctrl.set_datafmt()
     time.sleep(1)
-    print('[INFO] Start tiltmeter data pubilsh...')
+    print('[INFO] Start M-A550AC data pubilsh...')
     ctrl.start_syncmode()

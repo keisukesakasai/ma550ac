@@ -1,0 +1,33 @@
+<launch>
+
+  <node name = "tilt_nid1"
+  	type = "relay.py"
+    	pkg = "tiltmeter">
+    <remap from = '/xtilt' to = '/tiltmeter_nid1_xtilt_arcsec'/>
+    <remap from = '/ytilt' to = '/tiltmeter_nid1_ytilt_arcsec' />
+    <remap from = '/tilt' to = '/tiltmeter_nid1_tilt' />
+    <param name = "config_file"
+           value = "$(find tiltmeter)/relay_conf/ma550ac_tilt.conf" />
+  </node>
+
+  <node name = "tilt_nid3"
+  	type = "relay.py"
+    	pkg = "tiltmeter">
+    <remap from = '/xtilt' to = '/tiltmeter_nid3_xtilt_arcsec'/>
+    <remap from = '/ytilt' to = '/tiltmeter_nid3_ytilt_arcsec' />
+    <remap from = '/tilt' to = '/tiltmeter_nid3_tilt' />
+    <param name = "config_file"
+           value = "$(find tiltmeter)/relay_conf/ma550ac_tilt.conf" />
+  </node>
+
+  <node name = "tilt_nid4"
+  	type = "relay.py"
+    	pkg = "tiltmeter">
+    <remap from = '/xtilt' to = '/tiltmeter_nid4_xtilt_arcsec'/>
+    <remap from = '/ytilt' to = '/tiltmeter_nid4_ytilt_arcsec' />
+    <remap from = '/tilt' to = '/tiltmeter_nid4_tilt' />
+    <param name = "config_file"
+           value = "$(find tiltmeter)/relay_conf/ma550ac_tilt.conf" />
+  </node>
+
+</launch>
