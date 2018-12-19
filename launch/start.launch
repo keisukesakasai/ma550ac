@@ -1,12 +1,12 @@
 <launch>
 
   <group>
-    <machine name="ma550ac_1_3_4" address="ma550ac_1_3_4" env-loader="/home/necst/ros/devel/env.sh" user="necst" password="t10Nante"/>
+    <machine name="172.20.0.31" address="172.20.0.31" env-loader="/home/necst/ros/devel/env.sh" user="necst" password="t10Nante"/>
     <include file="$(find ma550ac)/launch/ma550ac_1_3_4.launch" />
   </group>
 
   <group>
-    <machine name="ma550ac_2" address="ma550ac_2" env-loader="/home/necst/ros/devel/env.sh" user="necst" password="t10Nante"/>
+    <machine name="172.20.0.33" address="172.20.0.33" env-loader="/home/necst/ros/devel/env.sh" user="necst" password="t10Nante"/>
     <include file="$(find ma550ac)/launch/ma550ac_2.launch" />
   </group>
 
