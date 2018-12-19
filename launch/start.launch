@@ -12,7 +12,7 @@
            password="t10Nante"/>
   <node machine="rpi-ma550ac-1"
         pkg="ma550ac"
-        type="ma550ac_1_3_4.launch"
+        type="ma550ac_1_3_4"
         name="ma550ac_1_3_4"
         required="true"/>
 
@@ -23,7 +23,7 @@
            password="t10Nante"/>
   <node machine="rpi-ma550ac-2"
         pkg="ma550ac"
-        type="ma550ac_2.launch"
+        type="ma550ac_2"
         name="ma550ac_2"
         required="true"/>
 
