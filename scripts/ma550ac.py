@@ -42,7 +42,7 @@ class ma550ac_controller(object):
         topic_list = ['/ma550ac_nid{0}_{1}'.format(nid, self.datafmt) for nid in self.nid_list] + ['/ma550ac_nid{}_temp'.format(nid) for nid in self.nid_list]
         self.pub_list = [rospy.Publisher(
             name = topic,
-            data_class = std_msgs.msg.std_msgs.msg.Int64MultiArray,
+            data_class = std_msgs.msg.Int64MultiArray,
             latch = True,
             queue_size = 1
             ) for topic in topic_list]
@@ -165,19 +165,17 @@ class ma550ac_controller(object):
         self.bus.send(msg)
 
         # publish
-        try:
-            while not rospy.is_shutdown():
-                d = self.bus.recv()
-                if d.arbitration_id == 0x080 or 0x581: pass
-                else:
-                    msg = std_msgs.msg.Int64MultiArray()
-                    msg.data = [_d for _d in d.data]
-                    pub_idx = self.arbitration_id_list.index(d.arbitration_id)
-                    self.pub_list[pub_idx].publish(msg)
-                    time.sleep(1e-3)
-        except KeyboardInterrupt:
-            print('try-except test')
-
+        while not rospy.is_shutdown():
+            d = self.bus.recv()
+            if d.arbitration_id in self.arbitration_id_list:
+                msg = std_msgs.msg.Int64MultiArray()
+                msg.data = [_d for _d in d.data]
+                pub_idx = self.arbitration_id_list.index(d.arbitration_id)
+                self.pub_list[pub_idx].publish(msg)
+                print(self.pub_ilst[pub_idx])
+                time.sleep(1e-3)
+            else: pass
+                
 
 if __name__ == '__main__':
     rospy.init_node('ma550ac')
