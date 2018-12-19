@@ -1,7 +1,9 @@
 <launch>
 
 <include file="$(find ma550ac)/launch/ma550ac.launch" />
-<include file="$(find ma550ac)/launch/ma550ac_tilt.launch" />
-<include file="$(find ma550ac)/launch/ma550ac_temp.launch" />
+<include file="$(find ma550ac)/launch/ma550ac_1_3_4.launch" />
+<!--
+<include file="$(find ma550ac)/launch/ma550ac_2.launch" />
+-->
 
 </launch>
