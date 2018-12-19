@@ -1,62 +1,8 @@
 <launch>
-
-
-  <node name = "tilt_nid1"
-  	type = "relay.py"
-    	pkg = "ma550ac">
-    <remap from = '/xtilt' to = '/ma550ac_nid1_xtilt_arcsec'/>
-    <remap from = '/ytilt' to = '/ma550ac_nid1_ytilt_arcsec' />
-    <remap from = '/tilt' to = '/ma550ac_nid1_tilt_binary' />
-    <param name = "config_file"
-           value = "$(find ma550ac)/relay_conf/ma550ac_tilt.conf" />
+  <node pkg="ma550ac" name="ma550ac" type="ma550ac.py" required="true" output="screen">
+    <param name="~nid_list" value="[1,3,4]" />
+    <param name="~datafmt" value="tilt" />
+    <param name="~synctime" value="1000" />
+    <param name="~sync_producer_nid" value="1" />
   </node>
-
-  <node name = "tilt_nid3"
-  	type = "relay.py"
-    	pkg = "ma550ac">
-    <remap from = '/xtilt' to = '/ma550ac_nid3_xtilt_arcsec'/>
-    <remap from = '/ytilt' to = '/ma550ac_nid3_ytilt_arcsec' />
-    <remap from = '/tilt' to = '/ma550ac_nid3_tilt_binary' />
-    <param name = "config_file"
-           value = "$(find ma550ac)/relay_conf/ma550ac_tilt.conf" />
-  </node>
-
-  <node name = "tilt_nid4"
-  	type = "relay.py"
-    	pkg = "ma550ac">
-    <remap from = '/xtilt' to = '/ma550ac_nid4_xtilt_arcsec'/>
-    <remap from = '/ytilt' to = '/ma550ac_nid4_ytilt_arcsec' />
-    <remap from = '/tilt' to = '/ma550ac_nid4_tilt_binary' />
-    <param name = "config_file"
-           value = "$(find ma550ac)/relay_conf/ma550ac_tilt.conf" />
-  </node>
-
-  <node name = "temp_nid1"
-  	type = "relay.py"
-    	pkg = "ma550ac">
-    <remap from = '/temp' to = '/ma550ac_nid1_temp_degC'/>
-    <remap from = '/tilt' to = '/ma550ac_nid1_temp_binary' />
-    <param name = "config_file"
-           value = "$(find ma550ac)/relay_conf/ma550ac_temp.conf" />
-  </node>
-
-  <node name = "temp_nid3"
-  	type = "relay.py"
-    	pkg = "ma550ac">
-    <remap from = '/temp' to = '/ma550ac_nid3_temp_degree'/>
-    <remap from = '/tilt' to = '/ma550ac_nid3_temp_binary' />
-    <param name = "config_file"
-           value = "$(find ma550ac)/relay_conf/ma550ac_temp.conf" />
-  </node>
-
-  <node name = "temp_nid4"
-  	type = "relay.py"
-    	pkg = "ma550ac">
-    <remap from = '/temp' to = '/ma550ac_nid4_temp_degree'/>
-    <remap from = '/tilt' to = '/ma550ac_nid4_temp_binary' />
-    <param name = "config_file"
-           value = "$(find ma550ac)/relay_conf/ma550ac_temp.conf" />
-  </node>
-
-
 </launch>
