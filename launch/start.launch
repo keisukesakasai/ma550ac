@@ -6,7 +6,7 @@
   <include file="$(find ma550ac)/launch/ma550ac_relay_2.launch" />
 
   <machine name="rpi-ma550ac-1"
-           address="172.20.0.31"
+           address="rpi-ma550ac-1"
            env-loader="/home/necst/ros/devel/env.sh"
            user="necst"
            password="t10Nante"/>
@@ -17,7 +17,7 @@
         required="true"/>
 
   <machine name="rpi-ma550ac-2"
-           address="172.20.0.33"
+           address="rpi-ma550ac-2"
            env-loader="/home/necst/ros/devel/env.sh"
            user="necst"
            password="t10Nante"/>

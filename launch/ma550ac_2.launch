@@ -4,7 +4,7 @@
         type="ma550ac.py"
         required="true"
         output="screen"
-        machine="172.20.0.33">
+        machine="rpi-ma550ac-2">
     <param name="~nid_list" value="[2]" />
     <param name="~datafmt" value="tilt" />
     <param name="~synctime" value="1000" />
