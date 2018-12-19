@@ -2,32 +2,32 @@
 
   <node name = "tilt_nid1"
   	type = "relay.py"
-    	pkg = "tiltmeter">
-    <remap from = '/xtilt' to = '/tiltmeter_nid1_xtilt_arcsec'/>
-    <remap from = '/ytilt' to = '/tiltmeter_nid1_ytilt_arcsec' />
-    <remap from = '/tilt' to = '/tiltmeter_nid1_tilt' />
+    	pkg = "ma550ac">
+    <remap from = '/xtilt' to = '/ma550ac_nid1_xtilt_arcsec'/>
+    <remap from = '/ytilt' to = '/ma550ac_nid1_ytilt_arcsec' />
+    <remap from = '/tilt' to = '/ma550ac_nid1_tilt' />
     <param name = "config_file"
-           value = "$(find tiltmeter)/relay_conf/ma550ac_tilt.conf" />
+           value = "$(find ma550ac)/relay_conf/ma550ac_tilt.conf" />
   </node>
 
   <node name = "tilt_nid3"
   	type = "relay.py"
-    	pkg = "tiltmeter">
-    <remap from = '/xtilt' to = '/tiltmeter_nid3_xtilt_arcsec'/>
-    <remap from = '/ytilt' to = '/tiltmeter_nid3_ytilt_arcsec' />
-    <remap from = '/tilt' to = '/tiltmeter_nid3_tilt' />
+    	pkg = "ma550ac">
+    <remap from = '/xtilt' to = '/ma550ac_nid3_xtilt_arcsec'/>
+    <remap from = '/ytilt' to = '/ma550ac_nid3_ytilt_arcsec' />
+    <remap from = '/tilt' to = '/ma550ac_nid3_tilt' />
     <param name = "config_file"
-           value = "$(find tiltmeter)/relay_conf/ma550ac_tilt.conf" />
+           value = "$(find ma550ac)/relay_conf/ma550ac_tilt.conf" />
   </node>
 
   <node name = "tilt_nid4"
   	type = "relay.py"
-    	pkg = "tiltmeter">
-    <remap from = '/xtilt' to = '/tiltmeter_nid4_xtilt_arcsec'/>
-    <remap from = '/ytilt' to = '/tiltmeter_nid4_ytilt_arcsec' />
-    <remap from = '/tilt' to = '/tiltmeter_nid4_tilt' />
+    	pkg = "ma550ac">
+    <remap from = '/xtilt' to = '/ma550ac_nid4_xtilt_arcsec'/>
+    <remap from = '/ytilt' to = '/ma550ac_nid4_ytilt_arcsec' />
+    <remap from = '/tilt' to = '/ma550ac_nid4_tilt' />
     <param name = "config_file"
-           value = "$(find tiltmeter)/relay_conf/ma550ac_tilt.conf" />
+           value = "$(find ma550ac)/relay_conf/ma550ac_tilt.conf" />
   </node>
 
 </launch>
