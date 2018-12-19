@@ -1,0 +1,13 @@
+<launch>
+
+  <node name = "temp_nid1"
+  	type = "relay.py"
+    	pkg = "ma550ac">
+    <remap from = '/temp' to = '/ma550ac_nid1_temp'/>
+    <remap from = '/tilt' to = '/ma550ac_nid1_temp_degree' />
+    <param name = "config_file"
+           value = "$(find ma550ac)/relay_conf/ma550ac_temp.conf" />
+  </node>
+
+
+</launch>
