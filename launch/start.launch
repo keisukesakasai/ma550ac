@@ -5,27 +5,23 @@
 
   <include file="$(find ma550ac)/launch/ma550ac_relay_2.launch" />
 
-  <machine name="rpi_ma550ac_1"
-           address="rpi_ma550ac_1"
-           env-loader="/home/necst/ros/devel/env.sh"
-           user="necst"
-           password="t10Nante"/>
-  <node machine="rpi_ma550ac_1"
-        pkg="ma550ac"
-        type="ma550ac_1_3_4.launch"
-        name="ma550ac_1_3_4"
-        required="true"/>
+  <group>
+    <machine name="rpi_ma550ac_1"
+             address="rpi_ma550ac_1"
+             env-loader="/home/necst/ros/devel/env.sh"
+             user="necst"
+             password="t10Nante" />
+    <include file="$(find ma550ac)/launch/ma550ac_1_3_4.launch" />
+  </group>
 
-  <machine name="rpi_ma550ac_2"
-           address="rpi_ma550ac_2"
-           env-loader="/home/necst/ros/devel/env.sh"
-           user="necst"
-           password="t10Nante"/>
-  <node machine="rpi_ma550ac_2"
-        pkg="ma550ac"
-        type="ma550ac_2.launch"
-        name="ma550ac_2"
-        required="true"/>
+  <group>
+    <machine name="rpi_ma550ac_2"
+             address="rpi_ma550ac_2"
+             env-loader="/home/necst/ros/devel/env.sh"
+             user="necst"
+             password="t10Nante" />
+    <include file="$(find ma550ac)/launch/ma550ac_2.launch" />
+  </group>
 
 
 </launch>
