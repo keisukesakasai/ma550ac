@@ -3,6 +3,7 @@
 name = 'relay'
 
 # ----
+import numpy
 import configparser
 import rospy
 import std_msgs.msg
