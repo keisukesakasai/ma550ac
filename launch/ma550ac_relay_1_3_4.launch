@@ -43,7 +43,7 @@
   <node name = "temp_nid3"
   	type = "relay.py"
     	pkg = "ma550ac">
-    <remap from = '/temp' to = '/ma550ac_nid3_temp_degree'/>
+    <remap from = '/temp' to = '/ma550ac_nid3_temp_degC'/>
     <remap from = '/tilt' to = '/ma550ac_nid3_temp_binary' />
     <param name = "config_file"
            value = "$(find ma550ac)/relay_conf/ma550ac_temp.conf" />
@@ -52,7 +52,7 @@
   <node name = "temp_nid4"
   	type = "relay.py"
     	pkg = "ma550ac">
-    <remap from = '/temp' to = '/ma550ac_nid4_temp_degree'/>
+    <remap from = '/temp' to = '/ma550ac_nid4_temp_degC'/>
     <remap from = '/tilt' to = '/ma550ac_nid4_temp_binary' />
     <param name = "config_file"
            value = "$(find ma550ac)/relay_conf/ma550ac_temp.conf" />
