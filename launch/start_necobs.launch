@@ -1,7 +1,7 @@
 <launch>
 
 
-  <include file="$(find ma550ac)/launch/ma550ac_2.launch" />
+  <include file="$(find ma550ac)/launch/ma550ac_relay_1_3_4.launch" />
 
   <include file="$(find ma550ac)/launch/ma550ac_relay_2.launch" />
 
