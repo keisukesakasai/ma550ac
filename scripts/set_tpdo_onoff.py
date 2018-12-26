@@ -3,6 +3,7 @@ import sys
 import can
 import time
 
+
 _nid = sys.argv[1]
 tpdo = sys.argv[2]
 onoff = sys.argv[3]
@@ -21,6 +22,7 @@ elif onoff == 0:
     txt = 'invalid'
     onoff_data = [0x23, 0x01, 0x18, 0x01, 0x81, 0x00+tpdo, 0x00, 0xc0]
 
+
 print('Bring up CAN0....')
 os.system("sudo /sbin/ip link set can0 up type can bitrate 1000000")
 time.sleep(1e-1)
@@ -31,15 +33,16 @@ except OSError:
     print('Cannot find PiCAN board.')
     exit()
 
+
 # pre-operational mode.
 msg = can.Message(
     arbitration_id=all_nid,
     data=pre_mode_data,
     extended_id=False)
 bus.send(msg)
-time.sleep(1)
+time.sleep(5e-2)
 
-# set tpdo config.
+# set tpdo onoff.
 msg = can.Message(
     arbitration_id=nid,
     data=onoff_data,
@@ -52,6 +55,7 @@ msg = can.Message(
     data=save_parameter_data,
     extended_id=False)
 bus.send(msg)
+time.sleep(5e-2)
 
 # restart.
 msg = can.Message(
@@ -59,7 +63,7 @@ msg = can.Message(
     data=restart_data,
     extended_id=False)
 bus.send(msg)
-time.sleep(1)
+time.sleep(5e-2)
 
 print('[INFO] Tiltmeter nid : {0}\n'
       '       TPDO{1} : {2}'.format(_nid, tpdo, txt))
