@@ -2,11 +2,10 @@ import os
 import can
 import time
 import pprint
-import datetime
 
 all_nid = 0x000
 base_nid = 0x600
-restart_data = [0x01] + [0x00] * 7
+restart_data = [0x81] + [0x00] * 7
 
 nid_list =[]
 
@@ -22,17 +21,17 @@ except OSError:
 
 # get node-ID
 msg = can.Message(
-    arbitration_id=all_node,
+    arbitration_id=all_nid,
     data=restart_data,
     extended_id=False
     )
 bus.send(msg)
-t0 = datatime.datatime.now()
-t1 = t0 + 1. # 1 sec. after
-while not(t0 == t1):
+t0 = time.time()
+t1 = t0 + 3. # 1 sec. after
+while True:
+    if 
     d = bus.recv()
-    nid = hex(d.arbitration_id)[-1]
+    nid = int(hex(d.arbitration_id)[-1])
     nid_list.append(nid)
-    t0 = datatime.datatie.now()
 
 print(sorted(nid_list))
