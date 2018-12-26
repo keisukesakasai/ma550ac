@@ -28,9 +28,8 @@ msg = can.Message(
     extended_id=False
     )
 bus.send(msg) # restart
-for i in range(cnt_node+1):
+for i in range(cnt_node):
     d = bus.recv()
-    print(d)
     if d.arbitration_id == 0x000: continue
     nid = int(hex(d.arbitration_id)[-1])
     nid_list.append(nid)
