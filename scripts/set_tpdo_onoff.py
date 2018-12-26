@@ -4,9 +4,9 @@ import can
 import time
 
 
-_nid = sys.argv[1]
-tpdo = sys.argv[2]
-onoff = sys.argv[3]
+_nid = int(sys.argv[1])
+tpdo = int(sys.argv[2])
+onoff = int(sys.argv[3])
 
 all_nid = 0x000
 base_nid = 0x600
