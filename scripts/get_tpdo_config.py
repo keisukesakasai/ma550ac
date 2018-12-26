@@ -53,4 +53,12 @@ for nid in nid_list:
         time.sleep(1e-2)
     tpdo_list.append(_tpdo_list)
 
-print(tpdo_list)
+# parse.
+d = [{} for i in range(len(nid_list))]
+for i in range(len(nid_lis)):
+    for j, valinval in enumerate(tpdo_list):
+        if valinval == 0x40: _ = 'valid'
+        elif valinval == 0xc0: _ = 'invalid'
+        d[i]['TPDO{}'.format(j)] = _tpdo_list
+
+print(d)
