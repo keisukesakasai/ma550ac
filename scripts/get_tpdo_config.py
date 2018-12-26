@@ -66,4 +66,4 @@ for _nid, _d in zip(nid_list, d):
     print('Tiltmeter nid = {}'.format(_nid))
     pprint.pprint(_d)
     print('\n')
-print('/-------------------------------------/')
+print('/----------------------------------------------/')
