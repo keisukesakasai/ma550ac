@@ -65,5 +65,5 @@ print('\n/-------------TPDO Configuration-------------/\n')
 for _nid, _d in zip(nid_list, d):
     print('Tiltmeter nid = {}'.format(_nid))
     pprint.pprint(_d)
-print('---')
+    print('\n')
 print('\n/-------------------------------------/')
