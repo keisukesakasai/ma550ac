@@ -8,7 +8,7 @@ cnt_node = int(sys.argv[1])
 all_nid = 0x000
 base_nid = 0x600
 restart_data = [0x81] + [0x00] * 7
-read_tpdo_data = [[0x40] + 0x00 + i + [0x18, 0x01, 0x00, 0x00, 0x00, 0x00]
+read_tpdo_data = [[[0x40] + 0x00 + i + [0x18, 0x01, 0x00, 0x00, 0x00, 0x00]]
                   for i in range(4)]
 
 nid_list = []
@@ -51,4 +51,3 @@ for nid in nid_list:
         d = bus.recv().data
         _tpdo_list.append(d[-1])
     tpdo_list.append(_tpdo_list)
-
