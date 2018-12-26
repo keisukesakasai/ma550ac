@@ -31,7 +31,7 @@ bus.send(msg) # restart
 for i in range(cnt_node+1):
     d = bus.recv()
     if d.arbitration_id == 0x000: continue
-    nid = int(hex(d.rbitration_id)[-1])
+    nid = int(hex(d.arbitration_id)[-1])
     nid_list.append(nid)
 
 print(sorted(nid_list))
