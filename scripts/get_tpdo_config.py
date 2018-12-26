@@ -4,7 +4,7 @@ import can
 import time
 import pprint
 
-cnt_node = sys.argv[1]
+cnt_node = int(sys.argv[1])
 all_nid = 0x000
 base_nid = 0x600
 restart_data = [0x81] + [0x00] * 7
