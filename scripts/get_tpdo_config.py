@@ -59,11 +59,11 @@ for i in range(len(nid_list)):
     for j, valinval in enumerate(tpdo_list[i]):
         if valinval == 0x40: which = 'valid'
         elif valinval == 0xc0: which = 'invalid'
-        d[i]['TPDO{}'.format(j)] = which
+        d[i]['TPDO{}'.format(j+1)] = which
 
 print('\n/-------------TPDO Configuration-------------/\n')
 for _nid, _d in zip(nid_list, d):
     print('Tiltmeter nid = {}'.format(_nid))
     pprint.pprint(_d)
     print('\n')
-print('\n/-------------------------------------/')
+print('/-------------------------------------/')
