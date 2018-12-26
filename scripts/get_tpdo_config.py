@@ -56,7 +56,7 @@ for nid in nid_list:
 # parse.
 d = [{} for i in range(len(nid_list))]
 for i in range(len(nid_list)):
-    for j, valinval in enumerate(tpdo_list):
+    for j, valinval in enumerate(tpdo_list[i]):
         if valinval == 0x40: which = 'valid'
         elif valinval == 0xc0: which = 'invalid'
         d[i]['TPDO{}'.format(j)] = which
