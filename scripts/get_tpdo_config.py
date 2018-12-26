@@ -50,4 +50,7 @@ for nid in nid_list:
         bus.send(msg)
         d = bus.recv().data
         _tpdo_list.append(d[-1])
+        time.sleep(1e-2)
     tpdo_list.append(_tpdo_list)
+
+print(tpdo_list)
