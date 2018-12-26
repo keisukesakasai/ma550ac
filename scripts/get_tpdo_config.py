@@ -2,7 +2,7 @@ import os
 import can
 import time
 import pprint
-import datatime
+import datetime
 
 all_nid = 0x000
 base_nid = 0x600
