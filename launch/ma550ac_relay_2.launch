@@ -1,23 +1,32 @@
 <launch>
 
 
-  <node name = "tilt_nid2"
+  <node name = "tpdo1_nid2"
   	type = "relay.py"
     	pkg = "ma550ac">
     <remap from = '/xtilt' to = '/ma550ac_nid2_xtilt_arcsec'/>
     <remap from = '/ytilt' to = '/ma550ac_nid2_ytilt_arcsec' />
-    <remap from = '/tilt' to = '/ma550ac_nid2_tilt_binary' />
+    <remap from = '/tilt' to = '/ma550ac_nid2_tpdo1_tilt' />
     <param name = "config_file"
-           value = "$(find ma550ac)/relay_conf/ma550ac_tilt.conf" />
+           value = "$(find ma550ac)/relay_conf/ma550ac_tpdo1.conf" />
   </node>
 
-  <node name = "temp_nid2"
+  <node name = "tpdo2_nid2"
+  	type = "relay.py"
+    	pkg = "ma550ac">
+    <remap from = '/ztilt' to = '/ma550ac_nid2_ztilt_arcsec'/>
+    <remap from = '/tilt' to = '/ma550ac_nid2_tpdo2_tilt' />
+    <param name = "config_file"
+           value = "$(find ma550ac)/relay_conf/ma550ac_tpdo2.conf" />
+  </node>
+
+  <node name = "tpdo4_nid2"
   	type = "relay.py"
     	pkg = "ma550ac">
     <remap from = '/temp' to = '/ma550ac_nid2_temp_degC'/>
-    <remap from = '/tilt' to = '/ma550ac_nid2_temp_binary' />
+    <remap from = '/tilt' to = '/ma550ac_nid2_topd4_temp' />
     <param name = "config_file"
-           value = "$(find ma550ac)/relay_conf/ma550ac_temp.conf" />
+           value = "$(find ma550ac)/relay_conf/ma550ac_tpdo4.conf" />
   </node>
 
 

@@ -28,6 +28,7 @@ class ma550ac_controller(object):
         self.base_nid = 0x600
         cob_mask = 0b11110000000
         cob_tpdo1 = 0b00110000000
+        cob_tpdo2 = 0b01010000000
         cob_tpdo4 = 0b10010000000
         self.restart_data = [0x01] + [0x00] * 7
         self.pre_mode_data = [0x80] + [0x00] * 7
@@ -40,8 +41,15 @@ class ma550ac_controller(object):
         self.sync_producer_nid = self.base_nid + rospy.get_param('~sync_producer_nid')
 
         # define ROS parameter.
-        self.arbitration_id_list = [cob_tpdo1 + nid for nid in self.nid_list] + [cob_tpdo4 + nid for nid in self.nid_list]
-        topic_list = ['/ma550ac_nid{0}_{1}_binary'.format(nid, self.datafmt) for nid in self.nid_list] + ['/ma550ac_nid{}_temp_binary'.format(nid) for nid in self.nid_list]
+        self.arbitration_id_list = [cob_tpdo1 + nid for nid in self.nid_list]
+        + [cob_tpdo2 + nid for nid in self.nid_list]
+        + [cob_tpdo4 + nid for nid in self.nid_list]
+        topic_list = ['/ma550ac_nid{0}_tpdo1_{1}'.format(nid, self.datafmt)
+                          for nid in self.nid_list]
+        + ['/ma550ac_nid{0}_tpdo2_{1}'.format(nid, self.datafmt)
+            for nid in self.nid_list]
+        + ['/ma550ac_nid{}_tpdo3_temp'.format(nid)
+               for nid in self.nid_list]
         self.pub_list = [rospy.Publisher(
             name = topic,
             data_class = std_msgs.msg.Int64MultiArray,
