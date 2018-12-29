@@ -12,6 +12,7 @@ import rospy
 from std_msgs.msg import Float64
 from std_msgs.msg import String
 
+
 class calc(object):
 
     def __init__(self):
@@ -23,6 +24,7 @@ class calc(object):
         self.t[1] = time.time()
         self.dt = round(self.t[1]-self.t[0], 2)*1000 # msec.
         print('dt={0}ms, nid1_xtilt={1}arcsec')
+
 
 if __name__ == '__main__':
     sub = rospy.Subscriber('/ma550ac_nid1_xtilt_arcsec',
