@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+ls#! /usr/bin/env python3
 
 
 import os
@@ -48,7 +48,7 @@ class ma550ac_controller(object):
                           for nid in self.nid_list] \
         + ['/ma550ac_nid{0}_tpdo2_{1}'.format(nid, self.datafmt)
             for nid in self.nid_list] \
-        + ['/ma550ac_nid{}_tpdo3_temp'.format(nid)
+        + ['/ma550ac_nid{}_tpdo4_temp'.format(nid)
                for nid in self.nid_list]
         self.pub_list = [rospy.Publisher(
             name = topic,
