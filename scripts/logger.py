@@ -116,21 +116,21 @@ if __name__ == '__main__':
                                        Float64,
                                        st.callback_xtilt,
                                        callback_args = idx)
-                      for idx, nid in enumerate(range(4), start=1)]
+                      for nid, idx in enumerate(range(4), start=1)]
     ytilt_sub_list = [rospy.Subscriber('/ma550ac_nid{0}_ytilt_arcsec'.format(nid),
                                        Float64,
                                        st.callback_ytilt,
                                        callback_args = idx)
-                      for idx, nid in enumerate(range(4), start=1)]
+                      for nid, idx in enumerate(range(4), start=1)]
     ztilt_sub_list = [rospy.Subscriber('/ma550ac_nid{0}_ztilt_arcsec'.format(nid),
                                        Float64,
                                        st.callback_ztilt,
                                        callback_args = idx)
-                      for idx, nid in enumerate(range(4), start=1)]
+                      for nid, idx in enumerate(range(4), start=1)]
     temp_sub_list = [rospy.Subscriber('/ma550ac_nid{0}_temp_degC'.format(nid),
                                        Float64,
                                        st.callback_temp,
                                        callback_args = idx)
-                      for idx, nid in enumerate(range(4), start=1)]
+                      for nid, idx in enumerate(range(4), start=1)]
     rospy.spin()
 
