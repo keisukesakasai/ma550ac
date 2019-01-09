@@ -36,7 +36,7 @@ class logger(object):
         self.filename_ytilt = self.saveto + '/ytilt.txt'
         self.filename_ztilt = self.saveto + '/ztilt.txt'
         self.filename_temp = self.saveto + '/temp.txt'
-        print('[INFO] File open (dir : {})'.format(self.saveto))
+        print('[INFO] File open (dir: {})'.format(self.saveto))
 
         f_datetime = open(self.filename_datetime, 'a')
         f_xtilt = open(self.filename_xtilt, 'a')
@@ -71,32 +71,32 @@ class logger(object):
         return
 
     def log(self):
+        while not rospy.is_shutdown():
+            datetime = str(time.time()) + '\n'
+            xtilt = ' '.join(map(str, self.xtilt)) + '\n'
+            ytilt = ' '.join(map(str, self.ytilt)) + '\n'
+            ztilt = ' '.join(map(str, self.ztilt)) + '\n'
+            temp = ' '.join(map(str, self.temp)) + '\n'
 
-        datetime = str(time.time()) + '\n'
-        xtilt = ' '.join(map(str, self.xtilt)) + '\n'
-        ytilt = ' '.join(map(str, self.ytilt)) + '\n'
-        ztilt = ' '.join(map(str, self.ztilt)) + '\n'
-        temp = ' '.join(map(str, self.temp)) + '\n'
+            f_datetime = open(self.filename_datetime, 'a')
+            f_xtilt = open(self.filename_xtilt, 'a')
+            f_ytilt = open(self.filename_ytilt, 'a')
+            f_ztilt = open(self.filename_ztilt, 'a')
+            f_temp = open(self.filename_temp, 'a')
 
-        f_datetime = open(self.filename_datetime, 'a')
-        f_xtilt = open(self.filename_xtilt, 'a')
-        f_ytilt = open(self.filename_ytilt, 'a')
-        f_ztilt = open(self.filename_ztilt, 'a')
-        f_temp = open(self.filename_temp, 'a')
+            f_datetime.write(datetime)
+            f_xtilt.write(xtilt)
+            f_ytilt.write(ytilt)
+            f_ztilt.write(ztilt)
+            f_temp.write(temp)
 
-        f_datetime.write(datetime)
-        f_xtilt.write(xtilt)
-        f_ytilt.write(ytilt)
-        f_ztilt.write(ztilt)
-        f_temp.write(temp)
+            f_datetime.close()
+            f_xtilt.close()
+            f_ytilt.close()
+            f_ztilt.close()
+            f_temp.close()
 
-        f_datetime.close()
-        f_xtilt.close()
-        f_ytilt.close()
-        f_ztilt.close()
-        f_temp.close()
-
-        time.sleep(1e-2) # 10 msec.
+            time.sleep(1e-2) # 10 msec.
 
     def start_thread(self):
         th = threading.Thread(target=self.log)
