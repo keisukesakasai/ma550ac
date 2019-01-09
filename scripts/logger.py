@@ -86,7 +86,7 @@ class logger(object):
 
         f_datetime.write(datetime)
         f_xtilt.write(xtilt)
-        f_ytilt.write(yrilt)
+        f_ytilt.write(ytilt)
         f_ztilt.write(ztilt)
         f_temp.write(temp)
 
