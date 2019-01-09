@@ -36,7 +36,7 @@ class logger(object):
         self.filename_ytilt = self.saveto + '/ytilt.txt'
         self.filename_ztilt = self.saveto + '/ztilt.txt'
         self.filename_temp = self.saveto + '/temp.txt'
-        print('[INFO] File open (dir¡§{})'.format(saveto))
+        print('[INFO] File open (dir : {})'.format(saveto))
 
         f_datetime = open(self.filename_datetime, 'a')
         f_xtilt = open(self.filename_xtilt, 'a')
