@@ -75,7 +75,7 @@ class logger(object):
         datetime = str(time.time()) + '\n'
         xtilt = ' '.join(map(str, self.xtilt)) + '\n'
         ytilt = ' '.join(map(str, self.ytilt)) + '\n'
-        ztilt = ' '.join(map(str, self,ztilt)) + '\n'
+        ztilt = ' '.join(map(str, self.ztilt)) + '\n'
         temp = ' '.join(map(str, self.temp)) + '\n'
 
         f_datetime = open(self.filename_datetime, 'a')
