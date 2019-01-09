@@ -43,7 +43,8 @@ class logger(object):
         return
 
     def log(self):
-        
+        pass
+
 
 if __name__ == '__main__':
     xtilt_sub_list = [rospy.Subscriber('/ma550ac_nid{0}_xtilt_arcsec'.format(nid),
@@ -66,3 +67,4 @@ if __name__ == '__main__':
                                        st.callback_temp,
                                        callback_args = idx)
                       for idx, nid in enumerate(range(4), start=1)]
+
