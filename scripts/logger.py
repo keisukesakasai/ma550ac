@@ -98,7 +98,7 @@ class logger(object):
 
         time.sleep(1e-2) # 10 msec.
 
-    der start_thread(self):
+    def start_thread(self):
         th = threading.Thread(target=self.log)
         th.setDaemon(True)
         th.start()
