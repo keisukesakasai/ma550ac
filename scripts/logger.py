@@ -28,6 +28,7 @@ class logger(object):
         self.ytilt = [0.] * 4
         self.ztilt = [0.] * 4
         self.temp = [0.] * 4
+        self.datetime_buff = 0.
         self.xtilt_buff = numpy.array([])
         self.ytilt_buff = numpy.array([])
         self.ztilt_buff = numpy.array([])
