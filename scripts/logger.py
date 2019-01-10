@@ -88,10 +88,10 @@ class logger(object):
                 time.sleep(self.synctime) # 10 msec.
 
             datetime_ave = numpy.mean(self.datetime_buff)
-            xtilt_ave = [numpy.array(self.xtilt_buff[:,i]).mean() for i in range(4)]
-            ytilt_ave = [numpy.array(self.ytilt_buff[:,i]).mean() for i in range(4)]
-            ztilt_ave = [numpy.array(self.ztilt_buff[:,i]).mean() for i in range(4)]
-            temp_ave = [numpy.array(self.temp_buff[:,i]).mean() for i in range(4)]
+            xtilt_ave = [numpy.array(self.xtilt_buff)[:,i].mean() for i in range(4)]
+            ytilt_ave = [numpy.array(self.ytilt_buff)[:,i].mean() for i in range(4)]
+            ztilt_ave = [numpy.array(self.ztilt_buff)[:,i].mean() for i in range(4)]
+            temp_ave = [numpy.array(self.temp_buff)[:,i].mean() for i in range(4)]
             self.xtilt_buff = []
             self.ytilt_buff = []
             self.ztilt_buff = []
