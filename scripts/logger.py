@@ -28,11 +28,11 @@ class logger(object):
         self.ytilt = [0.] * 4
         self.ztilt = [0.] * 4
         self.temp = [0.] * 4
-        self.datetime_buff = 0.
-        self.xtilt_buff = numpy.array([])
-        self.ytilt_buff = numpy.array([])
-        self.ztilt_buff = numpy.array([])
-        self.temp_buff = numpy.array([])
+        self.datetime_buff = []
+        self.xtilt_buff = []
+        self.ytilt_buff = []
+        self.ztilt_buff = []
+        self.temp_buff = []
         exp_time = datetime.datetime.fromtimestamp(float(time.time()))
         ymd = exp_time.strftime('%Y%m%d_')
         hms = exp_time.strftime('%H%M%S')
@@ -80,17 +80,22 @@ class logger(object):
     def log(self):
         while not rospy.is_shutdown():
             for i in range(self.average):
-                self.datetime_buff = numpy.append(self.datetime_buff, time.time())
-                self.xtilt_buff = numpy.append(self.xtilt_buff, self.xtilt)
-                self.ytilt_buff = numpy.append(self.ytilt_buff, self.ytilt)
-                self.ztilt_buff = numpy.append(self.ztilt_buff, self.ztilt)
-                self.temp_buff = numpy.append(self.temp_buff, self.temp)
+                self.datetime_buff.append(time.time())
+                self.xtilt_buff.append(self.xtilt)
+                self.ytilt_buff.append(self.ytilt)
+                self.ztilt_buff.append(self.ztilt)
+                self.temp_buff.append(self.temp)
                 time.sleep(self.synctime) # 10 msec.
+
             datetime_ave = numpy.mean(self.datetime_buff)
-            xtilt_ave = [numpy.mean(self.xtilt_buff[:,i]) for i in range(4)]
-            ytilt_ave = [numpy.mean(self.ytilt_buff[:,i]) for i in range(4)]
-            ztilt_ave = [numpy.mean(self.ztilt_buff[:,i]) for i in range(4)]
-            temp_ave = [numpy.mean(self.temp_buff[:,i]) for i in range(4)]
+            xtilt_ave = [numpy.array(self.xtilt_buff[:,i]).mean() for i in range(4)]
+            ytilt_ave = [numpy.array(self.ytilt_buff[:,i]).mean() for i in range(4)]
+            ztilt_ave = [numpy.array(self.ztilt_buff[:,i]).mean() for i in range(4)]
+            temp_ave = [numpy.array(self.temp_buff[:,i]).mean() for i in range(4)]
+            self.xtilt_buff = []
+            self.ytilt_buff = []
+            self.ztilt_buff = []
+            self.temp_buff = []
 
             datetime = str(time.time()) + '\n'
             xtilt = ' '.join(map(str, xtilt_ave)) + '\n'
