@@ -22,10 +22,16 @@ save_dir = os.path.join(data_dir, name)
 class logger(object):
 
     def __init__(self):
+        self.average = 100
+        self.synctime = 1e-2 # 10 msec.
         self.xtilt = [0.] * 4
         self.ytilt = [0.] * 4
         self.ztilt = [0.] * 4
         self.temp = [0.] * 4
+        self.xtilt_buff = numpy.array([])
+        self.ytilt_buff = numpy.array([])
+        self.ztilt_buff = numpy.array([])
+        self.temp_buff = numpy.array([])
         exp_time = datetime.datetime.fromtimestamp(float(time.time()))
         ymd = exp_time.strftime('%Y%m%d_')
         hms = exp_time.strftime('%H%M%S')
@@ -72,11 +78,24 @@ class logger(object):
 
     def log(self):
         while not rospy.is_shutdown():
+            for i in range(self.average):
+                self.datetime_buff = numpy.append(self.datetime_buff, time.time())
+                self.xtilt_buff = numpy.append(self.xtilt_buff, self.xtilt)
+                self.ytilt_buff = numpy.append(self.ytilt_buff, self.ytilt)
+                self.ztilt_buff = numpy.append(self.ztilt_buff, self.ztilt)
+                self.temp_buff = numpy.append(self.temp_buff, self.temp)
+                time.sleep(self.synctime) # 10 msec.
+            datetime_ave = numpy.mean(self.datetime_buff)
+            xtilt_ave = [numpy.mean(self.xtilt_buff[:,i]) for i in range(self.average)]
+            ytilt_ave = [numpy.mean(self.ytilt_buff[:,i]) for i in range(self.average)]
+            ztilt_ave = [numpy.mean(self.ztilt_buff[:,i]) for i in range(self.average)]
+            temp_ave = [numpy.mean(self.temp_buff[:,i]) for i in range(self.average)]
+
             datetime = str(time.time()) + '\n'
-            xtilt = ' '.join(map(str, self.xtilt)) + '\n'
-            ytilt = ' '.join(map(str, self.ytilt)) + '\n'
-            ztilt = ' '.join(map(str, self.ztilt)) + '\n'
-            temp = ' '.join(map(str, self.temp)) + '\n'
+            xtilt = ' '.join(map(str, xtilt_ave)) + '\n'
+            ytilt = ' '.join(map(str, ytilt_ave)) + '\n'
+            ztilt = ' '.join(map(str, ztilt_ave)) + '\n'
+            temp = ' '.join(map(str, temp_ave)) + '\n'
 
             f_datetime = open(self.filename_datetime, 'a')
             f_xtilt = open(self.filename_xtilt, 'a')
@@ -96,7 +115,7 @@ class logger(object):
             f_ztilt.close()
             f_temp.close()
 
-            time.sleep(1e-2) # 10 msec.
+            time.sleep(1e-3) # 1 msec.
 
     def start_thread(self):
         th = threading.Thread(target=self.log)
