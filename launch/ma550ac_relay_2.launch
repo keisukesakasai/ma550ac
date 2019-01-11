@@ -24,7 +24,7 @@
   	type = "relay.py"
     	pkg = "ma550ac">
     <remap from = '/temp' to = '/ma550ac_nid2_temp_degC'/>
-    <remap from = '/tilt' to = '/ma550ac_nid2_topd4_temp' />
+    <remap from = '/tilt' to = '/ma550ac_nid2_tpdo4_temp' />
     <param name = "config_file"
            value = "$(find ma550ac)/relay_conf/ma550ac_tpdo4.conf" />
   </node>
