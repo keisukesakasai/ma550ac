@@ -8,7 +8,7 @@
         output="screen">
     <param name="~nid_list" value="[2]" />
     <param name="~datafmt" value="tilt" />
-    <param name="~synctime" value="10" />
+    <param name="~synctime" value="2" />
     <param name="~sync_producer_nid" value="2" />
   </node>
 

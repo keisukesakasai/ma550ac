@@ -22,8 +22,8 @@ save_dir = os.path.join(data_dir, name)
 class logger(object):
 
     def __init__(self):
-        self.average = 100
-        self.synctime = 1e-2 # 10 msec.
+        self.average = 200
+        self.synctime = 2e-3 # 2 msec.
         self.xtilt = [0.] * 4
         self.ytilt = [0.] * 4
         self.ztilt = [0.] * 4
@@ -85,7 +85,7 @@ class logger(object):
                 self.ytilt_buff.append(self.ytilt)
                 self.ztilt_buff.append(self.ztilt)
                 self.temp_buff.append(self.temp)
-                time.sleep(self.synctime) # 10 msec.
+                time.sleep(self.synctime) # 2 msec.
 
             datetime_ave = numpy.mean(self.datetime_buff)
             xtilt_ave = [numpy.array(self.xtilt_buff)[:,i].mean() for i in range(4)]
