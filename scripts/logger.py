@@ -22,7 +22,7 @@ save_dir = os.path.join(data_dir, name)
 class logger(object):
 
     def __init__(self):
-        self.average = 200
+        self.average = 400
         self.synctime = 2e-3 # 2 msec.
         self.xtilt = [0.] * 4
         self.ytilt = [0.] * 4
