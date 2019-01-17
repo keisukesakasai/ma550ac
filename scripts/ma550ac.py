@@ -182,7 +182,7 @@ class ma550ac_controller(object):
                 msg.data = [_d for _d in d.data]
                 pub_idx = self.arbitration_id_list.index(d.arbitration_id)
                 self.pub_list[pub_idx].publish(msg)
-                time.sleep(1e-4) # 0.1 msec.
+                # time.sleep(1e-4) # 0.1 msec.
             else: pass
 
 
